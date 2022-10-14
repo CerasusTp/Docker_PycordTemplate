@@ -1,0 +1,11 @@
+version: '3'
+services:
+  python3:
+    restart: always
+    build: .
+    container_name: 'PycordTemplate'
+    working_dir: '/root/src'
+    tty: true
+    volumes:
+      - ./src:/root/src
+    command: python app.py
