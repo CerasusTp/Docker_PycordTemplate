@@ -1,7 +1,5 @@
-from select import select
 import discord
-from discord.commands import Option
-from discord.ui import InputText, Modal, Select, View
+from discord.ui import InputText, Modal, View
 import os
 from dotenv import load_dotenv
 
