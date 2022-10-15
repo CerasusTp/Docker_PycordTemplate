@@ -10,7 +10,7 @@ load_dotenv(dotenv_path)
 TOKEN = os.environ.get("TOKEN")
 GUILD_ID = [os.environ.get("DeveloperGUILD_ID")]
 
-bot = discord.Bot()
+bot = discord.Bot(debug_guilds = GUILD_ID)
 
 @bot.event
 async def on_ready():
@@ -42,18 +42,18 @@ class TestSelect(View):
         await interaction.followup.send(f'{GREETING[select.values[0]]}')
 
 # スラッシュコマンド
-@bot.slash_command(description = "スラッシュコマンド テスト", guild_ids = GUILD_ID)
+@bot.slash_command(description = "スラッシュコマンド テスト")
 async def test(ctx):
     modal = TestModal()
     await ctx.interaction.response.send_modal(modal)
 
-@bot.slash_command(description = "選択メニュー呼び出し", guild_ids = GUILD_ID)
+@bot.slash_command(description = "選択メニュー呼び出し")
 async def hello(ctx):
     view = TestSelect()
     await ctx.interaction.response.send_message("時間帯を選んでね！", view = view)
 
 # Embedテスト
-@bot.slash_command(description = "Embedメッセージ テスト", guild_ids = GUILD_ID)
+@bot.slash_command(description = "Embedメッセージ テスト")
 async def embedtest(ctx):
     embed = discord.Embed(title = 'タイトル', description = 'タイトル説明', color = 0xa2d7dd)
     embed.add_field(name = 'サブタイトル1', value = '内容')
