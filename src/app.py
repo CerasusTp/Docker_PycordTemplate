@@ -44,15 +44,19 @@ class TestSelect(View):
 # スラッシュコマンド
 @bot.slash_command(description = "スラッシュコマンド テスト")
 async def test(ctx):
+    await ctx.interaction.response.send_message(f'{str(ctx.interaction.user)[:-5]}さん こんにちは！！')
+
+@bot.slash_command(description = "モーダルウィンドウ 呼び出し")
+async def modal(ctx):
     modal = TestModal()
     await ctx.interaction.response.send_modal(modal)
 
-@bot.slash_command(description = "選択メニュー呼び出し")
+@bot.slash_command(description = "選択メニュー 呼び出し")
 async def hello(ctx):
     view = TestSelect()
     await ctx.interaction.response.send_message("時間帯を選んでね！", view = view)
 
-# Embedテスト
+# Embedメッセージ
 @bot.slash_command(description = "Embedメッセージ テスト")
 async def embedtest(ctx):
     embed = discord.Embed(title = 'タイトル', description = 'タイトル説明', color = 0xa2d7dd)
