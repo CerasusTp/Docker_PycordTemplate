@@ -30,21 +30,20 @@ class TestModal(Modal):
 class TestSelect(View):
     @discord.ui.select(
         options = [
-            discord.SelectOption(label = "Morning", emoji = "☀️", description = "朝"),
-            discord.SelectOption(label = "AfterNoon", emoji = "🕛", description = "昼"),
-            discord.SelectOption(label = "Night", emoji = "🌙", description = "夜")
+            discord.SelectOption(label = "Morning", emoji = "☀️", value = 'おはよう！', description = "朝"),
+            discord.SelectOption(label = "AfterNoon", emoji = "🕛", value = 'こんにちは！', description = "昼"),
+            discord.SelectOption(label = "Night", emoji = "🌙", value = 'こんばんは！', description = "夜")
         ])
     
     async def callback(self, select, interaction: discord.Interaction):
-        GREETING = {'Morning':'おはよう！', 'AfterNoon':'こんにちは！', 'Night':'こんばんは！'}
         select.disabled = True
         await interaction.response.edit_message(view = self)
-        await interaction.followup.send(f'{GREETING[select.values[0]]}')
+        await interaction.followup.send(f'{str(interaction.user)[:-5]}さん {select.values[0]}')
 
 # スラッシュコマンド
 @bot.slash_command(description = "スラッシュコマンド テスト")
-async def test(ctx):
-    await ctx.interaction.response.send_message(f'{str(ctx.interaction.user)[:-5]}さん こんにちは！！')
+async def slash(ctx):
+    await ctx.interaction.response.send_message(f'{str(ctx.interaction.user)[:-5]}さん はじめまして！')
 
 @bot.slash_command(description = "モーダルウィンドウ 呼び出し")
 async def modal(ctx):
@@ -52,7 +51,7 @@ async def modal(ctx):
     await ctx.interaction.response.send_modal(modal)
 
 @bot.slash_command(description = "選択メニュー 呼び出し")
-async def hello(ctx):
+async def select(ctx):
     view = TestSelect()
     await ctx.interaction.response.send_message("時間帯を選んでね！", view = view)
 
